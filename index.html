@@ -59,11 +59,18 @@
         .faq-item.active i {
             transform: rotate(180deg);
         }
-        .testimonial-slide {
+        .testimonial-slide, .gallery-slide {
             display: none;
         }
-        .testimonial-slide.active {
+        .testimonial-slide.active, .gallery-slide.active {
             display: block;
+        }
+        .gallery-slide.active {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -77,6 +84,7 @@
         <nav class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-medium">
             <a href="#about" class="hover:text-[#d4af37]">About</a>
             <a href="#services" class="hover:text-[#d4af37]">Services</a>
+            <a href="#gallery" class="hover:text-[#d4af37]">Gallery</a>
             <a href="#faq" class="hover:text-[#d4af37]">Insights</a>
             <a href="#contact" class="hover:text-[#d4af37]">Contact</a>
         </nav>
@@ -100,7 +108,7 @@
             </div>
             <div class="relative">
                 <div class="border-[12px] border-white shadow-2xl rounded-sm overflow-hidden transform rotate-2">
-                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&q=80&w=800" alt="Professional Portrait Placeholder" class="w-full h-[500px] object-cover grayscale-[20%]">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&q=80&w=800" alt="Kayla Livesay" class="w-full h-[500px] object-cover grayscale-[20%]">
                 </div>
                 <div class="absolute -bottom-6 -left-6 border-[8px] border-[#fdfcf9] shadow-lg w-40 h-40 overflow-hidden hidden md:block">
                      <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=400" alt="Farm context" class="w-full h-full object-cover">
@@ -118,7 +126,6 @@
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Service 1 -->
                 <div class="framed-section text-center flex flex-col items-center">
                     <div class="w-12 h-12 bg-[#f4f1ea] rounded-full flex items-center justify-center mb-6">
                         <i data-lucide="sprout" class="text-[#5c634e]"></i>
@@ -126,7 +133,6 @@
                     <h3 class="text-xl font-serif mb-4">A Better Way to Farm</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">Strategic crop management and sales training designed to maximize yield and profitability for the modern farmer.</p>
                 </div>
-                <!-- Service 2 -->
                 <div class="framed-section text-center flex flex-col items-center">
                     <div class="w-12 h-12 bg-[#f4f1ea] rounded-full flex items-center justify-center mb-6">
                         <i data-lucide="award" class="text-[#5c634e]"></i>
@@ -134,13 +140,55 @@
                     <h3 class="text-xl font-serif mb-4">Conklin Leadership</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">National-level direction focusing on team development and sustainable growth within the Conklin business ecosystem.</p>
                 </div>
-                <!-- Service 3 -->
                 <div class="framed-section text-center flex flex-col items-center">
                     <div class="w-12 h-12 bg-[#f4f1ea] rounded-full flex items-center justify-center mb-6">
                         <i data-lucide="trending-up" class="text-[#5c634e]"></i>
                     </div>
                     <h3 class="text-xl font-serif mb-4">Business Mentorship</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">Direct consulting for entrepreneurs looking to bridge the gap between hard work and high-level strategy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (Photos Only) -->
+    <section id="gallery" class="py-20 bg-[#fdfcf9]">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif">Cultivating Success in the Field</h2>
+                <p class="text-gray-500 mt-2 text-sm uppercase tracking-widest italic">A Better Way to Farm in Action</p>
+            </div>
+
+            <div class="relative px-12">
+                <div id="gallery-container" class="overflow-hidden rounded-lg border-[16px] border-white shadow-xl">
+                    <div class="gallery-slide active">
+                        <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=1600" alt="Work Gallery 1" class="w-full h-[600px] object-cover">
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=1600" alt="Work Gallery 2" class="w-full h-[600px] object-cover">
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&q=80&w=1600" alt="Work Gallery 3" class="w-full h-[600px] object-cover">
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&q=80&w=1600" alt="Work Gallery 4" class="w-full h-[600px] object-cover">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <button onclick="changeGallery(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 p-4 rounded-full shadow-lg text-[#5c634e] hover:text-[#d4af37] transition z-10">
+                    <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                </button>
+                <button onclick="changeGallery(1)" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 p-4 rounded-full shadow-lg text-[#5c634e] hover:text-[#d4af37] transition z-10">
+                    <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                </button>
+                
+                <!-- Indicators -->
+                <div class="flex justify-center gap-2 mt-8">
+                    <div class="gallery-dot w-2 h-2 rounded-full bg-[#d4af37]"></div>
+                    <div class="gallery-dot w-2 h-2 rounded-full bg-gray-200"></div>
+                    <div class="gallery-dot w-2 h-2 rounded-full bg-gray-200"></div>
+                    <div class="gallery-dot w-2 h-2 rounded-full bg-gray-200"></div>
                 </div>
             </div>
         </div>
@@ -222,7 +270,7 @@
                     </div>
                     <div class="flex items-center gap-4">
                         <i data-lucide="map-pin" class="w-4 h-4 text-[#d4af37]"></i>
-                        <span>Nationwide Consulting | Based in the Illinois</span>
+                        <span>Nationwide Consulting | Based in the Heartland</span>
                     </div>
                 </div>
             </div>
@@ -261,7 +309,7 @@
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="text-center md:text-left">
                 <div class="text-xl font-serif tracking-widest font-bold">KAYLA LIVESAY</div>
-                <p class="text-gray-400 text-xs mt-2 uppercase tracking-tighter">Improving crops and sales since (year)</p>
+                <p class="text-gray-400 text-xs mt-2 uppercase tracking-tighter">Improving crops and sales since 2010</p>
             </div>
             
             <div class="flex gap-6">
@@ -271,7 +319,7 @@
             </div>
             
             <div class="text-xs text-gray-500">
-                &copy; 2026 Kayla Livesay. All Rights Reserved.
+                &copy; 2024 Kayla Livesay. All Rights Reserved.
             </div>
         </div>
     </footer>
@@ -304,6 +352,25 @@
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + direction + slides.length) % slides.length;
             slides[currentSlide].classList.add('active');
+        }
+
+        // Gallery Carousel (Photos Only)
+        let currentGallerySlide = 0;
+        const gallerySlides = document.querySelectorAll('.gallery-slide');
+        const dots = document.querySelectorAll('.gallery-dot');
+
+        function updateGalleryDots() {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('bg-[#d4af37]', index === currentGallerySlide);
+                dot.classList.toggle('bg-gray-200', index !== currentGallerySlide);
+            });
+        }
+
+        function changeGallery(direction) {
+            gallerySlides[currentGallerySlide].classList.remove('active');
+            currentGallerySlide = (currentGallerySlide + direction + gallerySlides.length) % gallerySlides.length;
+            gallerySlides[currentGallerySlide].classList.add('active');
+            updateGalleryDots();
         }
 
         // Smooth Scroll
