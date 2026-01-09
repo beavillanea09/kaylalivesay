@@ -13,6 +13,7 @@
             --brand-accent: #c5a059;  /* Burnished Gold */
             --brand-bg: #fcfaf7;     /* Warm Paper */
             --brand-secondary: #e8e4dc; /* Light Pebble */
+            --radius-refined: 8px;    /* Refined soft curves */
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -40,6 +41,7 @@
         .system-card {
             background: white;
             border: 1px solid rgba(0,0,0,0.05);
+            border-radius: var(--radius-refined);
             transition: all 0.3s ease;
         }
         .system-card:hover {
@@ -56,6 +58,65 @@
             background-color: #3b4032;
             box-shadow: 0 10px 15px -3px rgba(74, 79, 62, 0.2);
         }
+
+        /* Image Styling with Refined Curves */
+        img, .collage-item, .rounded-soft {
+            border-radius: var(--radius-refined);
+        }
+
+        /* Asymmetrical Collage Grid */
+        .collage-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 140px;
+            gap: 1.5rem;
+        }
+        .collage-item {
+            position: relative;
+            overflow: hidden;
+            background: #1a1c17;
+        }
+        .collage-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+            filter: grayscale(40%) brightness(0.8);
+            border-radius: 0; 
+        }
+        .collage-item:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0%) brightness(0.9);
+        }
+        .collage-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(26, 28, 23, 0.9) 0%, rgba(26, 28, 23, 0) 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            transition: background 0.4s ease;
+        }
+        .collage-item:hover .collage-overlay {
+            background: linear-gradient(to top, rgba(74, 79, 62, 0.7) 0%, rgba(26, 28, 23, 0) 70%);
+        }
+
+        /* Grid Mapping */
+        .grid-consulting { grid-column: span 8; grid-row: span 4; }
+        .grid-mentorship { grid-column: span 4; grid-row: span 3; }
+        .grid-speaking { grid-column: span 4; grid-row: span 4; }
+        .grid-podcast { grid-column: span 4; grid-row: span 3; }
+        .grid-national { grid-column: span 4; grid-row: span 3; }
+
+        @media (max-width: 1024px) {
+            .collage-container { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 250px; }
+            .grid-consulting, .grid-mentorship, .grid-speaking, .grid-podcast, .grid-national { grid-column: span 1; grid-row: span 1; }
+        }
+        @media (max-width: 640px) {
+            .collage-container { grid-template-columns: 1fr; }
+        }
+
         .faq-answer {
             max-height: 0;
             overflow: hidden;
@@ -66,18 +127,6 @@
         }
         .faq-item.active i {
             transform: rotate(180deg);
-        }
-        .image-reveal {
-            position: relative;
-            overflow: hidden;
-        }
-        .image-reveal::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--brand-accent);
-            transform: translateX(-101%);
-            transition: transform 0.6s ease-in-out;
         }
     </style>
 </head>
@@ -91,6 +140,7 @@
         </div>
         <nav class="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.2em] font-semibold text-gray-600">
             <a href="#story" class="hover:text-[#c5a059] transition-colors">Our Story</a>
+            <a href="#portfolio" class="hover:text-[#c5a059] transition-colors">Portfolio</a>
             <a href="#systems" class="hover:text-[#c5a059] transition-colors">The Framework</a>
             <a href="#services" class="hover:text-[#c5a059] transition-colors">Next Gen Sales</a>
             <a href="#contact" class="hover:text-[#c5a059] transition-colors">Connect</a>
@@ -129,10 +179,10 @@
                     </div>
                 </div>
                 <div class="w-full lg:w-2/5 relative">
-                    <div class="relative z-10 border-[20px] border-white shadow-2xl">
+                    <div class="relative z-10 border-[20px] border-white shadow-2xl rounded-[10px] overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&q=80&w=800" alt="Kayla Livesay" class="w-full aspect-[4/5] object-cover filter contrast-[1.05]">
                     </div>
-                    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-[#e8e4dc] -z-0"></div>
+                    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-[#e8e4dc] -z-0 rounded-soft"></div>
                 </div>
             </div>
         </div>
@@ -152,7 +202,7 @@
                     </div>
                 </div>
                 <div class="space-y-12 pt-8">
-                    <div class="p-10 bg-[#fcfaf7] border-l-4 border-[#c5a059]">
+                    <div class="p-10 bg-[#fcfaf7] border-l-4 border-[#c5a059] rounded-r-soft">
                         <h3 class="font-serif text-2xl mb-4 text-[#4a4f3e]">The Realization</h3>
                         <p class="text-gray-600 leading-relaxed">I wasn’t overwhelmed because I was incapable. I was overwhelmed because everything depended on me. I realized the problem wasn’t business—it was the <span class="font-bold">lack of systems</span>.</p>
                     </div>
@@ -176,6 +226,64 @@
         </div>
     </section>
 
+    <!-- Portfolio Collage Grid Section -->
+    <section id="portfolio" class="py-24 bg-[#fcfaf7]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl mb-16">
+                <span class="text-[#c5a059] font-bold tracking-[.3em] text-[10px] uppercase block mb-4">A Legacy in Motion</span>
+                <h2 class="text-4xl md:text-5xl font-serif mb-6 leading-tight">Where Strategy Meets <span class="italic text-[#4a4f3e]">the Field</span></h2>
+                <p class="text-gray-500 font-light leading-relaxed max-w-xl">From corporate boardroom consulting to the raw grit of mentorship, I translate complex systems into practical, everyday wins.</p>
+            </div>
+
+            <div class="collage-container">
+                <!-- Next Gen Sale Consulting -->
+                <div class="collage-item grid-consulting shadow-sm group">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" alt="Consulting">
+                    <div class="collage-overlay">
+                        <span class="text-[#c5a059] text-[10px] font-bold tracking-widest uppercase mb-2">Primary Focus</span>
+                        <h3 class="text-white text-3xl font-serif">Next Gen Sale Consulting</h3>
+                        <p class="text-gray-300 text-sm mt-3 max-w-sm font-light opacity-0 group-hover:opacity-100 transition-opacity duration-500">High-level sales strategy focusing on simplification and record-breaking growth.</p>
+                    </div>
+                </div>
+
+                <!-- National Director Mentorship -->
+                <div class="collage-item grid-mentorship shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" alt="Mentorship">
+                    <div class="collage-overlay">
+                        <span class="text-[#c5a059] text-[10px] font-bold tracking-widest uppercase mb-2">Leadership</span>
+                        <h3 class="text-white text-xl font-serif">National Director Mentorship</h3>
+                    </div>
+                </div>
+
+                <!-- Keynote Speaking -->
+                <div class="collage-item grid-speaking shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1475721027785-f74dea327912?auto=format&fit=crop&q=80&w=800" alt="Speaking">
+                    <div class="collage-overlay">
+                        <span class="text-[#c5a059] text-[10px] font-bold tracking-widest uppercase mb-2">Engagements</span>
+                        <h3 class="text-white text-xl font-serif">Keynote Speaking</h3>
+                    </div>
+                </div>
+
+                <!-- Podcast Guest -->
+                <div class="collage-item grid-podcast shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=800" alt="Podcast">
+                    <div class="collage-overlay">
+                        <span class="text-[#c5a059] text-[10px] font-bold tracking-widest uppercase mb-2">Media</span>
+                        <h3 class="text-white text-xl font-serif">Podcast Guest</h3>
+                    </div>
+                </div>
+
+                <!-- National Director Role -->
+                <div class="collage-item grid-national shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800" alt="Directorate">
+                    <div class="collage-overlay">
+                        <span class="text-[#c5a059] text-[10px] font-bold tracking-widest uppercase mb-2">Roles</span>
+                        <h3 class="text-white text-xl font-serif">National Director</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Systems Framework -->
     <section id="systems" class="py-24 bg-[#f4f1ea]">
@@ -187,32 +295,32 @@
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- System 1 -->
-                <div class="system-card p-8 rounded-sm">
-                    <div class="w-10 h-10 bg-[#e8e4dc] flex items-center justify-center mb-6">
+                <div class="system-card p-8">
+                    <div class="w-10 h-10 bg-[#e8e4dc] flex items-center justify-center mb-6 rounded-sm">
                         <i data-lucide="refresh-cw" class="w-5 h-5 text-[#4a4f3e]"></i>
                     </div>
                     <h3 class="font-serif text-xl mb-3">Repeatable Sales</h3>
                     <p class="text-sm text-gray-500 leading-relaxed">Moving from "hope-based" selling to a consistent, trackable process that delivers predictable results month after month.</p>
                 </div>
                 <!-- System 2 -->
-                <div class="system-card p-8 rounded-sm">
-                    <div class="w-10 h-10 bg-[#e8e4dc] flex items-center justify-center mb-6">
+                <div class="system-card p-8">
+                    <div class="w-10 h-10 bg-[#e8e4dc] flex items-center justify-center mb-6 rounded-sm">
                         <i data-lucide="users" class="w-5 h-5 text-[#4a4f3e]"></i>
                     </div>
                     <h3 class="font-serif text-xl mb-3">Value Leadership</h3>
                     <p class="text-sm text-gray-500 leading-relaxed">Developing leaders who think like owners. Systems for recruitment and retention that don't drain your personal energy.</p>
                 </div>
                 <!-- System 3 -->
-                <div class="system-card p-8 rounded-sm">
-                    <div class="w-10 h-10 bg-[#e8e4dc] flex items-center justify-center mb-6">
+                <div class="system-card p-8">
+                    <div class="w-10 h-10 bg-[#e8e4dc] flex items-center justify-center mb-6 rounded-sm">
                         <i data-lucide="clock" class="w-5 h-5 text-[#4a4f3e]"></i>
                     </div>
                     <h3 class="font-serif text-xl mb-3">Time Ownership</h3>
                     <p class="text-sm text-gray-500 leading-relaxed">Frameworks that ensure you are working on the business, not just in it. Reclaiming 10+ hours of "messy" time weekly.</p>
                 </div>
                 <!-- System 4 -->
-                <div class="system-card p-8 rounded-sm">
-                    <div class="w-10 h-10 bg-[#e8e4dc] flex items-center justify-center mb-6">
+                <div class="system-card p-8">
+                    <div class="w-10 h-10 bg-[#e8e4dc] flex items-center justify-center mb-6 rounded-sm">
                         <i data-lucide="layers" class="w-5 h-5 text-[#4a4f3e]"></i>
                     </div>
                     <h3 class="font-serif text-xl mb-3">Legacy Foundation</h3>
@@ -222,13 +330,38 @@
         </div>
     </section>
 
+    <!-- Services / Next Gen Sales CTA -->
+    <section id="services" class="py-24 bg-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+            <div class="order-2 lg:order-1">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=1200" alt="Next Gen Sales" class="shadow-xl grayscale-[30%]">
+                    <div class="absolute -top-6 -right-6 bg-[#4a4f3e] text-white p-8 max-w-xs rounded-soft">
+                        <p class="text-2xl font-serif italic mb-2">"Making it livable."</p>
+                        <p class="text-[10px] uppercase tracking-widest opacity-70">The Next Gen Sales Philosophy</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <span class="text-[#c5a059] font-bold tracking-[.3em] text-[10px] uppercase block mb-4">The Next Gen Sales Program</span>
+                <h2 class="text-4xl md:text-5xl font-serif mb-8 leading-tight">Growth without chaos.<br>Leadership <span class="italic text-[#c5a059]">without losing</span> yourself.</h2>
+                <div class="space-y-6 text-gray-600 font-light text-lg mb-10">
+                    <p>This is for the person who didn’t necessarily set out to build a business, but now wants to build one that actually supports their life.</p>
+                    <p>Whether you're managing a hundred-acre operation or a high-performance sales team, our Next Gen Sales systems bridge the gap between "hard work" and "high-level strategy."</p>
+                </div>
+                <a href="#contact" class="inline-block border-2 border-[#4a4f3e] px-10 py-4 text-[11px] font-bold uppercase tracking-widest hover:bg-[#4a4f3e] hover:text-white transition-all rounded-sm">
+                    View Programs & Next Steps
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- FAQ -->
     <section class="py-24 bg-[#fcfaf7]">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="text-3xl font-serif text-center mb-16 underline decoration-[#c5a059] underline-offset-8">Conversations Worth Having</h2>
             <div class="space-y-4">
-                <div class="faq-item bg-white border border-gray-100 rounded-sm">
+                <div class="faq-item bg-white border border-gray-100 rounded-soft">
                     <button class="w-full flex justify-between items-center p-6 text-left" onclick="toggleFaq(this)">
                         <span class="font-serif text-lg text-gray-800">Why the focus on systems over just 'working harder'?</span>
                         <i data-lucide="plus" class="w-5 h-5 text-[#c5a059] transition-transform"></i>
@@ -237,7 +370,7 @@
                         Because hard work without a system is just a treadmill. Systems create freedom. I learned that the hard way at 18. When your business depends entirely on your presence, you don't own a business—you own a job. My frameworks allow the business to run so you can lead.
                     </div>
                 </div>
-                <div class="faq-item bg-white border border-gray-100 rounded-sm">
+                <div class="faq-item bg-white border border-gray-100 rounded-soft">
                     <button class="w-full flex justify-between items-center p-6 text-left" onclick="toggleFaq(this)">
                         <span class="font-serif text-lg text-gray-800">Is this only for the agricultural industry?</span>
                         <i data-lucide="plus" class="w-5 h-5 text-[#c5a059] transition-transform"></i>
@@ -246,7 +379,7 @@
                         While my roots are in the field (literally), these systems are universal for sales leaders and entrepreneurs. The principles of time ownership, value-aligned leadership, and repeatable sales cycles apply whether you're selling fertilizer or software.
                     </div>
                 </div>
-                <div class="faq-item bg-white border border-gray-100 rounded-sm">
+                <div class="faq-item bg-white border border-gray-100 rounded-soft">
                     <button class="w-full flex justify-between items-center p-6 text-left" onclick="toggleFaq(this)">
                         <span class="font-serif text-lg text-gray-800">What does 'Next Gen Sales' actually mean?</span>
                         <i data-lucide="plus" class="w-5 h-5 text-[#c5a059] transition-transform"></i>
@@ -288,7 +421,7 @@
                 </div>
             </div>
             
-            <div class="bg-[#fcfaf7] p-10 border border-gray-100 shadow-sm relative">
+            <div class="bg-[#fcfaf7] p-10 border border-gray-100 shadow-sm relative rounded-soft">
                 <div class="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-[#c5a059]"></div>
                 <form id="consultation-form" class="space-y-6">
                     <div class="grid md:grid-cols-2 gap-6">
@@ -318,7 +451,7 @@
                         <label class="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Your Story / Goals</label>
                         <textarea rows="4" class="w-full px-0 py-3 bg-transparent border-b border-gray-200 focus:border-[#c5a059] focus:outline-none transition-colors"></textarea>
                     </div>
-                    <button type="submit" class="w-full btn-primary py-5 font-bold uppercase tracking-widest text-[10px]">Request a Conversation</button>
+                    <button type="submit" class="w-full btn-primary py-5 font-bold uppercase tracking-widest text-[10px] rounded-sm">Request a Conversation</button>
                 </form>
                 <div id="form-feedback" class="hidden text-center py-12">
                     <i data-lucide="check-circle" class="w-16 h-16 text-[#c5a059] mx-auto mb-6"></i>
@@ -341,6 +474,7 @@
                     <div class="flex flex-col gap-4">
                         <span class="text-gray-500">Navigation</span>
                         <a href="#story" class="hover:text-[#c5a059] transition-colors">Story</a>
+                        <a href="#portfolio" class="hover:text-[#c5a059] transition-colors">Portfolio</a>
                         <a href="#systems" class="hover:text-[#c5a059] transition-colors">Systems</a>
                         <a href="#services" class="hover:text-[#c5a059] transition-colors">Programs</a>
                     </div>
@@ -409,7 +543,7 @@
         });
         
         function toggleMobileMenu() {
-            // Mobile menu logic could go here
+            // Mobile menu logic
         }
     </script>
 </body>
